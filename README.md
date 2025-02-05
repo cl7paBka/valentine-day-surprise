@@ -5,9 +5,9 @@
   <a href="https://postimg.cc/YvR1WbQZ">
     <img src="https://i.postimg.cc/W4LSxyzN/image.png" alt="Valentine's Day Banner">
   </a>
-  <em>Интерактивный сайт-сюрприз к Дню Святого Валентина</em>
 </p>
 
+<p align="center"><em>Интерактивный сайт-сюрприз к Дню Святого Валентина</em></p>
 
 ---
 
