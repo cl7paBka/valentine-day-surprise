@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Valentine’s Day Surprise (WIP)
 
-First, run the development server:
+![Valentine's Day Banner](https://via.placeholder.com/1200x300?text=Valentine's+Day+Surprise)  
+*Интерактивный сайт-сюрприз к Дню Святого Валентина*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## О проекте
+
+**Valentine’s Day Surprise** – это одностраничное приложение-сюрприз, созданное с целью порадовать любимого человека оригинальной анимацией подарка и романтическими эффектами.  
+На главной странице отображается динамический обратный отсчёт до момента открытия подарка. После истечения времени пользователь сможет открыть подарок, потянув за ленточку, что запустит волшебную анимацию распаковки с нежными поздравлениями и "дождём" сердечек.
+
+Проект построен с использованием следующих технологий:
+
+- **Next.js** (с TypeScript) – для создания современного SSR/SSG-приложения.
+- **Tailwind CSS** – для быстрой и гибкой стилизации.
+- **Framer Motion** – для создания интерактивных и плавных анимаций.
+- **GSAP** – для продвинутых анимационных эффектов (например, анимация сердечек).
+- **npm** – для сборки и запуска проекта.
+
+---
+
+## Особенности
+
+- **Обратный отсчёт:** динамический таймер до момента открытия подарка.
+- **Интерактивная распаковка подарка:** пользователь может потянуть за ленточку, чтобы открыть красиво оформленный подарок.
+- **Эффект "дождя" сердечек:** нежные анимации, создающие атмосферу романтики.
+- **Настраиваемая дата:** в коде легко изменить дату, когда подарок будет доступен (например, до или после 14 февраля).
+- **В разработке:** проект находится на стадии активной разработки. В будущих обновлениях планируется доработка функционала и улучшение дизайна.
+
+---
+
+## Установка и запуск
+
+1. **Клонируйте репозиторий:**
+
+   ```bash
+   git clone https://github.com/yourusername/valentine-day-surprise.git
+   cd valentine-day-surprise
+   ```
+
+2. **Установите зависимости:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Запустите сервер разработки:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Настройка даты открытия подарка
+
+В файле с таймером (например, **src/app/page.tsx** или отдельном компоненте **Countdown**) дата открытия подарка задаётся с помощью переменной, например:
+
+```tsx
+const targetDate = new Date("2025-02-04T00:00:00");
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Измените эту дату на нужное значение, чтобы установить момент, когда подарок станет доступен (например, можно задать дату _до_ или _после_ 14 февраля).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Деплой
 
-## Learn More
+В ближайшем будущем планируется покупка домена и размещение проекта на сервере. Следите за обновлениями!
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Вклад и обратная связь
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Проект находится в разработке, поэтому постоянно вносятся улучшения. Если у вас есть предложения, идеи или замечания, пожалуйста, [создайте issue](https://github.com/yourusername/valentine-day-surprise/issues) или отправьте pull request.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*❤️ Создано с любовью и стремлением сделать мир чуточку романтичнее..) ❤️*

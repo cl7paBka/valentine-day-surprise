@@ -11,6 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        mint: "#a0f0d8",
+        romanticPink: "#ffc0cb",
+      },
+      backgroundImage: {
+        'mint-gradient': 'linear-gradient(to bottom, #AAF0D1, #AAF0D1)', // Мятная краля (Дорого)
+        'romantic-gradient': 'linear-gradient(to bottom, #ffc0cb, #ffe4e1)',
       },
     },
   },
