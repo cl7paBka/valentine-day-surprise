@@ -1,8 +1,13 @@
 
 # Valentine’s Day Surprise (WIP)
 
-![Valentine's Day Banner](https://via.placeholder.com/1200x300?text=Valentine's+Day+Surprise)  
-*Интерактивный сайт-сюрприз к Дню Святого Валентина*
+<p align="center">
+  <a href="https://postimg.cc/YvR1WbQZ">
+    <img src="https://i.postimg.cc/W4LSxyzN/image.png" alt="Valentine's Day Banner">
+  </a>
+  <em>Интерактивный сайт-сюрприз к Дню Святого Валентина</em>
+</p>
+
 
 ---
 
