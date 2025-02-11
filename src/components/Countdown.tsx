@@ -14,15 +14,16 @@ interface TimeBlockProps {
 const TimeBlock: React.FC<TimeBlockProps> = ({ value, label }) => {
   return (
     <div className="flex flex-col items-center">
-      {/* Обёртка с фиксированной шириной и высотой для предотвращения изменения размера */}
+      {/* Фиксированная обёртка для предотвращения дерганья при изменении */}
       <div className="w-16 h-12 flex items-center justify-center">
         <AnimatePresence exitBeforeEnter>
           <motion.div
             key={value}
+            layout
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.6 }}
             className="text-4xl font-bold text-gray-700 drop-shadow-sm"
           >
             {value}
@@ -42,6 +43,7 @@ export const Countdown: React.FC<CountdownProps> = ({ targetDate, onTimerEnd }) 
     seconds: "00",
   });
   const [isLast10Minutes, setIsLast10Minutes] = useState(false);
+  const [timerEnded, setTimerEnded] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -50,6 +52,7 @@ export const Countdown: React.FC<CountdownProps> = ({ targetDate, onTimerEnd }) 
 
       if (distance <= 0) {
         clearInterval(timer);
+        setTimerEnded(true);
         setTimeLeft({ days: "00", hours: "00", minutes: "00", seconds: "00" });
         setIsLast10Minutes(false);
         if (onTimerEnd) onTimerEnd();
@@ -73,15 +76,19 @@ export const Countdown: React.FC<CountdownProps> = ({ targetDate, onTimerEnd }) 
     return () => clearInterval(timer);
   }, [targetDate, onTimerEnd]);
 
-  // Выбираем градиент в зависимости от оставшегося времени
-  const containerGradient = isLast10Minutes
+  // Выбираем градиент для контейнера:
+  const containerGradient = timerEnded
+    ? "bg-gradient-to-r from-purple-300 to-indigo-300"
+    : isLast10Minutes
     ? "bg-gradient-to-r from-pink-300 to-red-300"
     : "bg-gradient-to-r from-teal-100 to-cyan-100";
 
-  // Пульсирующая анимация в последних 10 минутах – более плавная и медленная
-  const pulseAnimation = isLast10Minutes
+  // Пульсирующая анимация для последних 10 минут – медленнее и элегантнее
+  const pulseAnimation = timerEnded
+    ? {}
+    : isLast10Minutes
     ? {
-        animate: { scale: [1, 1.03, 1] },
+        animate: { scale: [1, 1.04, 1] },
         transition: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
       }
     : {};
@@ -91,13 +98,30 @@ export const Countdown: React.FC<CountdownProps> = ({ targetDate, onTimerEnd }) 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1 }}
-      className={`flex space-x-4 p-5 ${containerGradient} rounded-full shadow-xl`}
+      className={`flex items-center justify-center p-5 ${containerGradient} rounded-full shadow-xl`}
       {...pulseAnimation}
     >
-      {timeLeft.days !== "00" && <TimeBlock value={timeLeft.days} label="Дни" />}
-      {timeLeft.hours !== "00" && <TimeBlock value={timeLeft.hours} label="Часы" />}
-      <TimeBlock value={timeLeft.minutes} label="Минуты" />
-      <TimeBlock value={timeLeft.seconds} label="Секунды" />
+      {timerEnded ? (
+        <AnimatePresence exitBeforeEnter>
+          <motion.div
+            key="open"
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 1 }}
+            className="text-4xl font-bold text-white drop-shadow-lg"
+          >
+            Открывай
+          </motion.div>
+        </AnimatePresence>
+      ) : (
+        <>
+          {timeLeft.days !== "00" && <TimeBlock value={timeLeft.days} label="Дни" />}
+          {timeLeft.hours !== "00" && <TimeBlock value={timeLeft.hours} label="Часы" />}
+          <TimeBlock value={timeLeft.minutes} label="Минуты" />
+          <TimeBlock value={timeLeft.seconds} label="Секунды" />
+        </>
+      )}
     </motion.div>
   );
 };

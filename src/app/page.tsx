@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Page() {
   // Целевая дата для обратного отсчёта, например, 14 февраля 2025 года
-  const targetDate = new Date("2025-03-10T11:30:00");
+  const targetDate = new Date("2025-02-14T16:02:00");
 
   const [isLocked, setIsLocked] = useState(true);
   const [showSurprise, setShowSurprise] = useState(false);
@@ -56,6 +56,7 @@ export default function Page() {
     setIsAudioPlaying(!isAudioPlaying);
   };
 
+  // TODO: Добавить ещё фраз
   // Массив романтичных предложений для надписи
   const romanticPhrases = [
     "Скоро начнется волшебство!",
