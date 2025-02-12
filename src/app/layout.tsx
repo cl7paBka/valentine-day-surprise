@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Подарок на 14 Февраля 🎁",
-  description: "Романтический сайт-сюрприз с любовью и романтикой <3",
+  description: "Сайт-сюрприз с любовью и романтикой <3",
 };
 
 export default function RootLayout({
