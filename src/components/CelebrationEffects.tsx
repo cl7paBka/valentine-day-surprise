@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { gsap } from "gsap";
 
+// Вы можете настроить цвета и эмодзи на свой вкус.
 const colors = [
   "#FFC0CB",
   "#FF69B4",
@@ -12,62 +13,72 @@ const colors = [
 ];
 const emojis = ["❤️"];
 
-// TODO: Переделать
 export const CelebrationEffects: React.FC = () => {
-  // Генерируем данные для сердечек: увеличено количество до 70,
-  // и для каждого задаём случайное горизонтальное положение.
+  // Генерируем исходные параметры сердечек.
   const heartsData = useMemo(() => {
-    const innerWidth = typeof window !== "undefined" ? window.innerWidth : 800;
-    return Array.from({ length: 90 }).map((_, i) => {
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      const randomEmoji = emojis[0];
+    const width = typeof window !== "undefined" ? window.innerWidth : 800;
+    return Array.from({ length: 150 }).map((_, index) => {
+      const color = colors[Math.floor(Math.random() * colors.length)];
       const fontSize = `${Math.random() * 0.5 + 1.5}rem`;
-      const x = Math.random() * innerWidth;
-      return { key: i, randomColor, randomEmoji, fontSize, x };
+      const x = Math.random() * width;
+      return {
+        key: index,
+        color,
+        fontSize,
+        emoji: emojis[0],
+        x,
+      };
     });
   }, []);
 
   useEffect(() => {
     const hearts = gsap.utils.toArray(".heart") as HTMLElement[];
-    hearts.forEach((heart: HTMLElement) => {
-      // Функция, которая запускает анимацию для одного сердечка
-      const startAnimation = () => {
-        // Случайная задержка для разнообразия старта
-        const delay = Math.random() * 5;
-        // Длительность анимации от 10 до 15 секунд
-        const duration = 10 + Math.random() * 5;
-        gsap.fromTo(
-          heart,
-          {
-            // Сердечко появляется ниже экрана
-            y: window.innerHeight + 50,
-            opacity: 0.7,
+
+    hearts.forEach((heart) => {
+      const animateHeart = () => {
+        // Сразу переносим сердечко далеко за нижнюю границу, чтобы не было видно «спавна»
+        gsap.set(heart, {
+          y: window.innerHeight + 200,
+          opacity: 0,
+        });
+
+        // Запускаем «покачивание» по горизонтали
+        const waveTween = gsap.to(heart, {
+          x: `+=${gsap.utils.random(20, 40)}`,
+          duration: gsap.utils.random(2, 4),
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+
+        // Лёгкая ротация для «живости»
+        const rotateTween = gsap.to(heart, {
+          rotation: gsap.utils.random(-20, 20),
+          duration: gsap.utils.random(1.5, 3),
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+
+        // Основная анимация полёта снизу вверх
+        gsap.to(heart, {
+          y: -150, // чуть выше верхнего края экрана
+          opacity: 0.8,
+          duration: gsap.utils.random(5, 8), // скорость полёта
+          delay: gsap.utils.random(0, 2),    // чтобы сердца появлялись «волной»
+          ease: "linear",
+          onComplete: () => {
+            // Как только сердечко достигло верхней границы, «убиваем» твины
+            waveTween.kill();
+            rotateTween.kill();
+            // И сразу запускаем анимацию заново (heart мгновенно вернётся вниз и полетит снова)
+            animateHeart();
           },
-          {
-            // Анимация подъёма: оно летит вверх до точки, когда уже почти заходит за экран
-            y: -50,
-            // Плавное исчезание: к концу анимации opacity падает до 0
-            opacity: 0,
-            ease: "linear",
-            duration: duration,
-            delay: delay,
-            onComplete: () => {
-              // После завершения анимации сразу сбрасываем положение (opacity уже 0)
-              gsap.set(heart, { y: window.innerHeight + 50, opacity: 0 });
-              startAnimation();
-            },
-          }
-        );
+        });
       };
-      startAnimation();
-      // Горизонтальная осцилляция для естественного эффекта
-      gsap.to(heart, {
-        x: "+=10",
-        duration: 2,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-      });
+
+      // Запускаем анимацию для каждого сердечка
+      animateHeart();
     });
   }, []);
 
@@ -78,15 +89,13 @@ export const CelebrationEffects: React.FC = () => {
           key={heart.key}
           className="heart absolute select-none"
           style={{
-            color: heart.randomColor,
+            color: heart.color,
             fontSize: heart.fontSize,
-            willChange: "transform, opacity",
-            // Устанавливаем только горизонтальное положение – GSAP задаст y и opacity
             transform: `translateX(${heart.x}px)`,
-            opacity: 0, // начальное значение; GSAP сразу задаст нужное opacity
+            willChange: "transform, opacity",
           }}
         >
-          {heart.randomEmoji}
+          {heart.emoji}
         </div>
       ))}
     </div>
