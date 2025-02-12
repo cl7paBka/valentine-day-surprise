@@ -8,7 +8,7 @@ import { CelebrationEffects } from "@/components/CelebrationEffects";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Page() {
-  const targetDate = new Date("2025-02-10T16:02:00");
+  const targetDate = new Date("2025-02-14T00:00:00");
 
   const [isLocked, setIsLocked] = useState(true);
   const [showSurprise, setShowSurprise] = useState(false);
@@ -52,14 +52,16 @@ export default function Page() {
   };
 
   const romanticPhrases = [
-    "Скоро начнется волшебство!",
-    "Осталось совсем немного до начала сказки!",
-    "Время приближается к чуду!",
-    "Секунды тают – вот-вот начнется любовь!",
-    "Волшебство уже на пороге!",
     "Мгновение, полное нежности, уже близко!",
     "Скоро твой подарок раскроется!",
     "Любовь витает в воздухе – осталось чуть-чуть!",
+    "Секунды шепчут о грядущем чуде!",
+    "Скоро твой мир наполнится светом нежности!",
+    "Секунды тают, и нежность наполняет воздух!",
+    "Скоро мир окрасится в краски любви!",
+    "Скоро в каждом вдохе зазвучит мелодия нежности и любви!",
+    "Любовь обрушится, как волшебный дождь, освежая каждое мгновение!",
+    "Скоро мир засияет ярче, ведь любовь уже в каждом луче света!"
   ];
 
   const [randomPhrase, setRandomPhrase] = useState("");

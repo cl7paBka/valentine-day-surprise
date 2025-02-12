@@ -16,7 +16,7 @@ const TimeBlock: React.FC<TimeBlockProps> = ({ value, label }) => {
     <div className="flex flex-col items-center">
       {/* Фиксированная обёртка для предотвращения дерганья при изменении */}
       <div className="w-16 h-12 flex items-center justify-center">
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="sync">
           <motion.div
             key={value}
             layout
@@ -102,7 +102,7 @@ export const Countdown: React.FC<CountdownProps> = ({ targetDate, onTimerEnd }) 
       {...pulseAnimation}
     >
       {timerEnded ? (
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="wait">
           <motion.div
             key="open"
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
