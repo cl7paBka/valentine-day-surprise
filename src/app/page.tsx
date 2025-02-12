@@ -8,15 +8,12 @@ import { CelebrationEffects } from "@/components/CelebrationEffects";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Page() {
-  // Целевая дата для обратного отсчёта, например, 14 февраля 2025 года
-  const targetDate = new Date("2025-02-14T16:02:00");
+  const targetDate = new Date("2025-02-10T16:02:00");
 
   const [isLocked, setIsLocked] = useState(true);
   const [showSurprise, setShowSurprise] = useState(false);
-  // Начальный фон — мятный, далее переключится на романтический
   const [background, setBackground] = useState("bg-mint-gradient");
 
-  // Управление аудио
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -32,10 +29,8 @@ export default function Page() {
   };
 
   const handleOpenGift = () => {
-    // Меняем фон на романтический и показываем поздравление
     setBackground("bg-romantic-gradient");
     setShowSurprise(true);
-    // Автозапуск музыки при открытии подарка
     if (audioRef.current) {
       audioRef.current
         .play()
@@ -56,8 +51,6 @@ export default function Page() {
     setIsAudioPlaying(!isAudioPlaying);
   };
 
-  // TODO: Добавить ещё фраз
-  // Массив романтичных предложений для надписи
   const romanticPhrases = [
     "Скоро начнется волшебство!",
     "Осталось совсем немного до начала сказки!",
@@ -69,11 +62,11 @@ export default function Page() {
     "Любовь витает в воздухе – осталось чуть-чуть!",
   ];
 
-  // Выбираем случайное предложение один раз при монтировании компонента
-  const randomPhrase = useMemo(
-    () => romanticPhrases[Math.floor(Math.random() * romanticPhrases.length)],
-    []
-  );
+  const [randomPhrase, setRandomPhrase] = useState("");
+
+  useEffect(() => {
+    setRandomPhrase(romanticPhrases[Math.floor(Math.random() * romanticPhrases.length)]);
+  }, []);
 
   return (
     <>
@@ -151,7 +144,7 @@ export default function Page() {
                   textShadow: "1px 1px 2px rgba(0,0,0,0.2)",
                 }}
               >
-                Милая, каждое мгновение с тобой – как волшебная сказка, которую я
+                Милая, каждое мгновение с тобой — как волшебная сказка, которую я
                 хочу переживать снова и снова.
               </motion.p>
               <motion.p
@@ -179,11 +172,23 @@ export default function Page() {
                 Спасибо за твою любовь, нежность и за каждый миг, проведённый
                 вместе.
               </motion.p>
+              {/* Подпись "от Максима" с красивым выделением и ссылкой на GitHub */}
+              <motion.a
+                href="https://github.com/cl7paBka"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 right-4 text-2xl font-semibold text-[#FF6F61] hover:text-pink-600"
+                style={{ fontFamily: "'Dancing Script', cursive" }}
+                initial={{ opacity: 0, x: 200 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1 }}
+              >
+                от Максима
+              </motion.a>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Аудиофайл (файл valentine-music.mp3 должен находиться в папке public) */}
         <audio ref={audioRef} src="/valentine-music.mp3" loop />
       </main>
     </>

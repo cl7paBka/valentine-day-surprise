@@ -14,10 +14,7 @@ export const GiftBox: React.FC<GiftBoxProps> = ({ isLocked, onOpen }) => {
   const lidControls = useAnimation();
   const ribbonX = useMotionValue(0);
 
-  // Порог, при котором считается, что ленточку потянули достаточно
   const RIBBON_THRESHOLD = 100;
-
-  // Расширенный массив милых романтичных фраз для раннего открытия
   const cutePhrases = [
     "Подожди ещё чуть-чуть...",
     "Еще немного, пожалуйста...",
@@ -34,7 +31,6 @@ export const GiftBox: React.FC<GiftBoxProps> = ({ isLocked, onOpen }) => {
   const handleDragEnd = () => {
     if (ribbonX.get() > RIBBON_THRESHOLD) {
       if (!isLocked) {
-        // Если подарок разблокирован – медленная, плавная анимация открытия:
         ribbonControls.start({
           x: 300,
           opacity: 0,
@@ -49,7 +45,6 @@ export const GiftBox: React.FC<GiftBoxProps> = ({ isLocked, onOpen }) => {
           onOpen();
         }, 1500);
       } else {
-        // Если подарок заблокирован, сбрасываем ленточку и показываем милое сообщение:
         ribbonControls.start({ x: 0, transition: { duration: 0.8 } });
         const phrase =
           cutePhrases[Math.floor(Math.random() * cutePhrases.length)];
@@ -129,9 +124,7 @@ export const GiftBox: React.FC<GiftBoxProps> = ({ isLocked, onOpen }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 1 }}
-            // Здесь изменён цвет надписи на романтический розовый (#FFB3C1)
-            className="text-4xl font-bold drop-shadow-lg"
-            style={{ color: "#FFB3C1" }}
+            className="text-4xl font-bold text-[#FFB3C1] drop-shadow-lg"
           >
             Открывай
           </motion.div>
