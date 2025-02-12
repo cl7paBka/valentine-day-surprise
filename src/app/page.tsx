@@ -22,7 +22,7 @@ const romanticPhrases = [
 ];
 
 export default function Page() {
-  const targetDate = new Date("2025-02-14T00:00:00");
+  const targetDate = new Date("2025-02-13T00:59:50");
 
   const [isLocked, setIsLocked] = useState(true);
   const [showSurprise, setShowSurprise] = useState(false);
