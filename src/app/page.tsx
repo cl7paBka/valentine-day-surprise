@@ -1,11 +1,25 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef } from "react"; // useMemo удалён
 import Head from "next/head";
 import { Countdown } from "@/components/Countdown";
 import { GiftBox } from "@/components/GiftBox";
 import { CelebrationEffects } from "@/components/CelebrationEffects";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Вынесли массив фраз за пределы компонента, чтобы он не создавался заново при каждом рендере
+const romanticPhrases = [
+  "Мгновение, полное нежности, уже близко!",
+  "Скоро твой подарок раскроется!",
+  "Любовь витает в воздухе – осталось чуть-чуть!",
+  "Секунды шепчут о грядущем чуде!",
+  "Скоро твой мир наполнится светом нежности!",
+  "Секунды тают, и нежность наполняет воздух!",
+  "Скоро мир окрасится в краски любви!",
+  "Скоро в каждом вдохе зазвучит мелодия нежности и любви!",
+  "Любовь обрушится, как волшебный дождь, освежая каждое мгновение!",
+  "Скоро мир засияет ярче, ведь любовь уже в каждом луче света!"
+];
 
 export default function Page() {
   const targetDate = new Date("2025-02-14T00:00:00");
@@ -18,6 +32,7 @@ export default function Page() {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
 
+  // Обновляем громкость при изменении volume
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
@@ -35,7 +50,9 @@ export default function Page() {
       audioRef.current
         .play()
         .then(() => setIsAudioPlaying(true))
-        .catch((err) => console.warn("Автовоспроизведение не разрешено", err));
+        .catch((err) =>
+          console.warn("Автовоспроизведение не разрешено", err)
+        );
     }
   };
 
@@ -46,28 +63,20 @@ export default function Page() {
     } else {
       audioRef.current
         .play()
-        .catch((err) => console.warn("Автовоспроизведение не разрешено", err));
+        .catch((err) =>
+          console.warn("Автовоспроизведение не разрешено", err)
+        );
     }
     setIsAudioPlaying(!isAudioPlaying);
   };
 
-  const romanticPhrases = [
-    "Мгновение, полное нежности, уже близко!",
-    "Скоро твой подарок раскроется!",
-    "Любовь витает в воздухе – осталось чуть-чуть!",
-    "Секунды шепчут о грядущем чуде!",
-    "Скоро твой мир наполнится светом нежности!",
-    "Секунды тают, и нежность наполняет воздух!",
-    "Скоро мир окрасится в краски любви!",
-    "Скоро в каждом вдохе зазвучит мелодия нежности и любви!",
-    "Любовь обрушится, как волшебный дождь, освежая каждое мгновение!",
-    "Скоро мир засияет ярче, ведь любовь уже в каждом луче света!"
-  ];
-
   const [randomPhrase, setRandomPhrase] = useState("");
 
+  // Поскольку romanticPhrases теперь статичный массив, можно оставить пустой массив зависимостей
   useEffect(() => {
-    setRandomPhrase(romanticPhrases[Math.floor(Math.random() * romanticPhrases.length)]);
+    setRandomPhrase(
+      romanticPhrases[Math.floor(Math.random() * romanticPhrases.length)]
+    );
   }, []);
 
   return (
@@ -80,6 +89,7 @@ export default function Page() {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* Замечание: для глобального подключения шрифтов рекомендуется перенести эти ссылки в pages/_document.tsx */}
         <link
           href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap"
           rel="stylesheet"
